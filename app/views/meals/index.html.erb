@@ -1,0 +1,40 @@
+<div class="header">
+<center><%= image_tag ("menu.jpg") %></center>
+ <div class="container">
+   
+   <center><h1>Meal List</h>
+   <h2><%= link_to "Add New Meal Item", new_meal_path() %>    <%= link_to "Main Menu", '/' %></h2></center>
+ </div>
+</div>
+
+<div class="mlist">
+ <center><div class="container">
+
+ <table border = 1>
+ 	<tr>
+ 		<td><h3>Image</h3></td>
+ 		<td><h3>Meal Name</h3></td>
+ 		<td><h3>Category</h3></td>
+ 		<td><h3>Number of Servings</h3></td>
+ 		<td><h3>Ingredients</h3></td>
+ 		<td><h3>Prep Time</h3></td>
+ 		<td><h3>Actions</h3></td>
+ 	</tr>
+  <% @meals.order(:meal_name).each do |m, food| %>
+  	<tr>
+		<td><%= image_tag(m.image, size: "75x50") %></td>
+		<td><%=m.meal_name %></td>
+		<td><%=m.category %></td>
+		<td><%=m.servings %></td>
+		<td><% m.food_id.compact.each do |id| %>
+			<% fname = Foods.find(id) %>
+			<%=fname.food_name %><br>
+			<% end %></td>
+		<td><%=m.prep_time %></td>
+		<td><%= link_to "Edit", edit_meal_path(m) %>  <%= link_to "Delete", m, method: :deletem, data: {confirm: "Are you sure?" } %></td>
+	</tr>
+  
+<% end %>
+		</center>
+ </div>
+</div>

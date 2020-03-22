@@ -1,0 +1,33 @@
+<div class="header">
+<%= image_tag ("food.jpg") %>
+ <div class="container">
+
+ </div>
+</div>
+
+<div class="form">
+ <div class="container">
+ 
+<%= form_for(@chooser) do |c| %>
+<p>
+<%= c.label(:day, "Day of Week") %><br>
+<%= c.text_field(:day) %>
+</p>
+<p>
+<%= c.label(:breakfast) %>
+<%= c.collection_select(:breakfast, Meals.all, :id, :meal_name, :include_blank => "Please select") %>
+</p>
+<p>
+<%= c.label(:lunch) %>
+<%= c.collection_select(:lunch, Meals.all, :id, :meal_name, :include_blank => "Please select") %>
+</p>
+<p>
+<%= c.label(:supper) %>
+<%= c.collection_select(:supper, Meals.all, :id, :meal_name, :include_blank => "Please select") %>
+</p>
+<p>
+ <%= c.submit "Save Changes" %> <button type="submit" formaction="javascript:history.go(-1);">Cancel</button>
+</p>
+ <% end %>  
+  </div>
+</div>

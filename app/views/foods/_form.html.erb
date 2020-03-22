@@ -1,0 +1,30 @@
+<div class="header">
+<%= image_tag ("food.jpg") %>
+ <div class="container">
+
+ </div>
+</div>
+
+<div class="form">
+ <div class="container">
+ 
+<%= form_for(@food) do |f| %>
+<p>
+<%=  f.label(:food_name, "Food Name") %><br>
+<%= f.text_field(:food_name) %>
+</p>
+
+<p>
+<%=  f.label(:cost, "Cost") %><br>
+<%= f.number_field :cost, value: number_to_currency(f.object.cost.to_f, delimiter: '', unit: ''), step: :any %>
+</p>
+<p>
+<%=  f.label(:unit_qty, "Unit QTY") %><br>
+<%= f.text_field(:unit_qty) %>
+</p>
+<p>
+ <%= f.submit "Save Changes" %>  <button type="submit" formaction="javascript:history.go(-1);">Cancel</button>
+</p>
+ <% end %>  
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="header">
+<%= image_tag ("menu.jpg") %>
+ <div class="container">
+
+ </div>
+</div>
+
+<div class="form">
+ <div class="container">
+ 
+<%= form_for(@meal) do |f| %>
+<p>
+ <%= f.label(:image, "Image") %><br>
+ <%= f.text_field(:image) %>
+</p>
+<p>
+<%=  f.label(:meal_name, "Meal Name") %><br>
+<%= f.text_field(:meal_name) %>
+</p>
+<p>
+ <%=  f.label(:category, "Category") %><br>
+<%= f.text_field(:category) %>
+</p>
+<p>
+ <%= f.label(:servings, "Number of Servings") %><br>
+ <%= f.number_field :servings %>
+</p>
+<p>
+<%=  f.label(:prep_time, "Prep Time") %><br>
+<%= f.text_field(:prep_time) %>
+</p>
+
+<table>
+<tr>
+ <td>
+ <%=  f.label(:food_id, "Ingredients") %></td>
+</tr>
+<tr>
+ <td><p style="font-size: 15px">
+ <%= f.collection_check_boxes(:food_id, Foods.all, :id, :food_name, {:include_blank => false}, {:multiple => true}) do |b| %> 
+ <%= b.label(":data-value" => b.value) { b.check_box + b.text } %><br>
+ <% end %></p></td>
+  </tr>
+</table>
+<p>
+ <%= f.submit "Save Changes" %> <button type="submit" formaction="javascript:history.go(-1);">Cancel</button>
+</p>
+ <% end %>  
+  </div>
+</div>

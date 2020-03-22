@@ -1,0 +1,38 @@
+<div class="header">
+<center><%= image_tag ("menu.jpg") %></center>
+ <div class="container">
+   
+   <center><h1>Weekly Meal Planner</h>
+   <h2><%= link_to "Plan a New Day", new_chooser_path() %>    <%= link_to "Main Menu", '/' %><br><br>
+   <%= link_to "View/Print the Grocery List", choosers_groceries_path() %></h2></center>
+ </div>
+</div>
+
+<div class="mplanner">
+ <center><div class="container">
+
+ <table border = 1>
+ 	<tr>
+ 		<td><h3><center>Day</center></h3></td>
+ 		<td><h3><center>Breakfast</center></h3></td>
+ 		<td><h3><center>Lunch</center></h3></td>
+ 		<td><h3><center>Supper</center></h3></td>
+ 		<td><h3><center>Actions</center></h3></td>
+ 	</tr>
+  <% @choosers.order(:id).each do |c, meal| %>
+  	<tr>
+		<td><b><%= c.day %></b></td>
+		<td><% bname = Meals.find(c.breakfast) %>
+		    <%= bname.meal_name %></td>
+		<td><% lname = Meals.find(c.lunch) %>
+		    <%= lname.meal_name %></td>
+		<td><% sname = Meals.find(c.supper) %>
+		    <%= sname.meal_name %></td>
+		<td><%= link_to "Edit", edit_chooser_path(c) %>  <%= link_to "Delete", c, method: :deletem, data: {confirm: "Are you sure?" } %></td>
+	</tr>
+  
+<% end %>
+
+		</center>
+ </div>
+</div>

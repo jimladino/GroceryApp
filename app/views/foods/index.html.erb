@@ -1,0 +1,34 @@
+<style>
+ .inline
+</style>
+<div class="header">
+<center><%= image_tag ("food.jpg") %></center>
+ <div class="container">
+   
+   <center><h1>Food List</h>
+   <h2><%= link_to "Add New Food Item", 'foods/new' %>    <%= link_to "Main Menu", '/' %></h2></center>
+ </div>
+</div>
+
+<div class="flist">
+ <center><div class="container">
+
+ <table border = 1>
+ 	<tr>
+ 		<td><h3>Name</h3></td>
+ 		<td><h3>Cost</h3></td>
+ 		<td><h3>Unit QTY</h3></td>
+ 		<td><h3>Actions</h3></td>
+ 	</tr>
+  <% @foods.order(:food_name).each do |food| %>
+  	<tr>
+		<td><%= food.food_name %></td>
+		<td><%=number_to_currency(food.cost) %></td>
+		<td><%=food.unit_qty %></td>
+		<td><%= link_to "Edit", edit_food_path(food) %>  <%= link_to "Delete", food, method: :deletef, data: {confirm: "Are you sure?" } %></td>
+	</tr>
+<% end %>
+ </table>
+		</center>
+ </div>
+</div>

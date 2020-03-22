@@ -1,0 +1,116 @@
+<body data-gr-c-s-loaded="true">
+
+<style>
+ .inline {
+ display: inline;
+ }
+</style>
+<div class="header">
+<center><%= image_tag ("menu.jpg") %></center>
+ <div class="container">
+   <center>
+     <h1>Weekly Grocery List</h1>
+     <h2><%= link_to "Plan a New Day", new_chooser_path() %>    <%= link_to "Main Menu", '/' %></h2>
+   </center>
+ </div>
+</div>
+
+<div class="glist">
+ <center><div class="container">
+
+ <table border = 1>
+ 	<tr>
+ 		<td><h3><center>Selected</center></h3></td>
+ 		<td><h3><center>Food Item</center></h3></td>
+ 		<td><h3><center>Quantity</center></h3>
+ 		<td><h3><center>Unit Cost</center></h3></td>
+ 		<td><h3><center>Total Item Cost</center></h3>
+ 	<% marray = [] %>
+  <% @choosers.each do |c, meal| %>
+  <% farray = [c.breakfast, c.lunch, c.supper] %>
+  <% marray = marray + farray %>
+  <% end %>
+  <% garray = [] %>
+  <% marray.each do |m| %>
+  <% mealselect = Meals.find(m) %>
+  <% intarray = mealselect.food_id %>
+  <% garray = garray + intarray %>
+  <% end %>
+  <% #garray = garray.uniq %>
+  <% garray = garray.compact %>
+  <% print garray %>
+  <% ghash = {} %>
+  <% for i in 0..garray.length-1 %>
+  <% if ghash[garray[i]] == nil
+      ghash[garray[i]] = 1
+     else
+      ghash[garray[i]] = 1 + ghash[garray[i]]
+     end
+    end
+  %>
+  <% print ghash.compact %>
+  <% #ghash = ghash.compact %>
+  <% totalCost = 0 %>
+  <% x = 0 %>
+  <% ghash.each do |i, q| %>
+  <% gfind = Foods.find(i) %>
+  <tr id="row_<%=x %>">
+		 <td><b><input type="checkbox" checked="checked" id="item_checked_<%=x %>"></b></td>
+		 <td><%= gfind.food_name %></td>
+		 <td><%= q %></td>
+		 <% fcost = (gfind.cost.to_f * q) %>
+   <td><%= number_with_precision(gfind.cost, precision: 2) %></td>
+		 <td id="cost_<%=x %>"><%= number_with_precision(fcost, precision: 2) %></td>
+	 </tr>
+	 <% x = x + 1 %>
+	 <% totalCost = fcost + totalCost %>
+  <% end %>
+	 </table>
+
+ <p><b class = "inline">Approximate Grocery Total: $
+    <span class = "inline" id = "item_total"></span></b><br>
+    <input class = "inline" id = "recalc" type = "button" value = "Recalculate Cost"><br>
+    <input class = "inline" id = "repost" type = "button" value = "Repost List"><br>
+    <input class = "inline" id = "print_list" type = "button" value = "Print List"></p>
+		</center>
+ </div>
+<script>
+ function addPrices() {
+  var total = 0;
+  var long = <%=garray.length %>;
+  for (var i = 0; i <= long; i++) {
+   var selected = $('#item_checked_' + i);
+   if(selected.prop('checked') == true) {
+    var rowVal = parseFloat($('#cost_'+ i).html());
+   } else {
+    var rowVal = 0;
+   }
+   total += rowVal;
+  }
+  $('#item_total').html(total.toFixed(2));
+ }
+ function hideLines() {
+  var long = <%=garray.length %>;
+  for (var i = 0; i <= long; i++) {
+   var rowSel = $('#item_checked_' + i);
+   if(rowSel.prop('checked') != true) {
+    $('#row_' + i).hide();
+   } else {
+    $('#row_' + i).show();
+   }
+  }
+ }
+ function doMultiple() {
+  addPrices();
+  hideLines();
+ }
+ function printButton() {
+  window.print();
+ }
+
+ $(document).ready(addPrices);
+ $('#recalc').click(addPrices);
+ $('#repost').click(doMultiple);
+ $('#print_list').click(printButton);
+</script>
+</body>
