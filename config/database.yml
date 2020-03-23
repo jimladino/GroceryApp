@@ -17,8 +17,13 @@
 default: &default
   adapter: postgresql
   encoding: sql_ascii
-#  username: ubuntu
- # password: password1
+
+# To use local DB, uncomment below:
+#  url: <%= ENV['DATABASE_URL_LOCAL'] %>  
+
+# To use Heroku DB, uncomment below
+  url: <%= ENV['DATABASE_URL'] %>  
+ 
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
