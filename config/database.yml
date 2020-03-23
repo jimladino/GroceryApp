@@ -19,11 +19,11 @@ default: &default
   encoding: sql_ascii
 
 # To use local DB, uncomment below:
-#  url: <%= ENV['DATABASE_URL_LOCAL'] %>  
+#  url: <%= ENV['DATABASE_URL_LOCAL'] %>
 
 # To use Heroku DB, uncomment below
-  url: <%= ENV['DATABASE_URL'] %>  
- 
+  url: <%= ENV['DATABASE_URL'] %>
+
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -74,8 +74,8 @@ test:
 # production deployment.
 #
 # On Heroku and other platform providers, you may have a full connection URL
-# available as an environment variable. For example:
 #
+# available as an environment variable. For example:
 #   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
 #
 # You can use this database configuration with:
@@ -86,5 +86,5 @@ test:
 production:
   <<: *default
   database: GroceryApp_production
-  username: GroceryApp
-  password: <%= ENV['GROCERYAPP_DATABASE_PASSWORD'] %>
+#  username: GroceryApp
+#  password: <%= ENV['GROCERYAPP_DATABASE_PASSWORD'] %>
